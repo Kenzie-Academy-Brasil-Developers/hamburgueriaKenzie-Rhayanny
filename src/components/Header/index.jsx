@@ -1,29 +1,38 @@
 import { useState } from "react";
 import Logo from "../../assets/Logo.svg";
 import { MdSearch, MdShoppingCart } from "react-icons/md";
+import styles from "../Header/style.module.scss";
 
-export const Header = () => {
-   const [value, setValue] = useState("");
+export const Header = ({ setOpenBtn, setProductList, setValue, cartList }) => {
+  const submit = (event) => {
+    event.preventDefault();
+    setProductList(value);
+    setValue("");
+  };
 
-   return (
-      <header>
-         <img src={Logo} alt="Logo Kenzie Burguer" />
-         <div>
-            <button>
-                <MdShoppingCart size={21} />
-                <span>0</span>
-            </button>
-            <form>
-               <input
-                  type="text"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-               />
-               <button type="submit">
-                 <MdSearch size={21} />
-               </button>
-            </form>
-         </div>
-      </header>
-   );
+  return (
+    <header>
+      <div className="container">
+        <div className={styles.containerHeader}>
+          <img src={Logo} alt="Logo Kenzie Burguer" />
+
+          <button onClick={() => setOpenBtn(true)} className="body">
+            <MdShoppingCart size={28} />
+            <span>{cartList.length}</span>
+          </button>
+        </div>
+        <form onSubmit={submit}>
+          <input
+            className="Headline"
+            placeholder="Digitar Pesquisa"
+            type="text"
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button className="btnSm" type="submit">
+            <MdSearch className="loop" size={21} />
+          </button>
+        </form>
+      </div>
+    </header>
+  );
 };
